@@ -1,0 +1,27 @@
+{
+  "name": "k8s-blueprint",
+  "version": "1.0.0",
+  "description": "A production-shaped Kubernetes blueprint for a 12-factor web app: Helm chart, Kustomize overlays, HPA, PDB, NetworkPolicy, probes, secrets and CI validation.",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "author": "Arvion Technologies <hello@arviontech.net> (https://arviontech.net)",
+  "homepage": "https://arvion-technology.github.io/labs/demos/k8s-blueprint/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arvion-technology/k8s-blueprint.git"
+  },
+  "scripts": {
+    "test": "node --test",
+    "demo": "node scripts/serve.mjs . 4173",
+    "shot": "node scripts/shot.mjs 1440 900 docs/screenshot.png",
+    "shot:2": "node scripts/shot.mjs 1440 900 docs/screenshot-2.png '#prod'",
+    "verify": "node --test test/ && node scripts/serve-check.mjs && bash scripts/validate.sh",
+    "validate": "bash scripts/validate.sh",
+    "sync": "node scripts/sync-demo.mjs",
+    "render-base": "node scripts/render-base.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
