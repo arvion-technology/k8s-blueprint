@@ -1,0 +1,29 @@
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: webapp
+  labels:
+    app.kubernetes.io/name: webapp
+    app.kubernetes.io/instance: webapp
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "2m"
+spec:
+  ingressClassName: nginx
+
+  tls:
+    - hosts:
+        - webapp.example.com
+      secretName: webapp-tls
+
+  rules:
+    - host: webapp.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: webapp
+                port:
+                  number: 80

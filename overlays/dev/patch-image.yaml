@@ -1,0 +1,4 @@
+# JSON 6902 patch applied by Kustomize (and by scripts/validate.mjs).
+- op: replace
+  path: /spec/template/spec/containers/0/image
+  value: "ghcr.io/arvion/webapp:dev"

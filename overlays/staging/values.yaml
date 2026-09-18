@@ -1,0 +1,23 @@
+# Helm values for the staging overlay. Image tag and replica count are applied as
+# Kustomize patches below, so they are visible as release-specific changes rather
+# than hidden in a values file.
+environment: staging
+config:
+  logLevel: info
+ingress:
+  host: webapp.staging.example.com
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 8
+pdb:
+  enabled: true
+serviceMonitor:
+  enabled: true
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 384Mi

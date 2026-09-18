@@ -1,0 +1,6 @@
+- op: replace
+  path: /spec/minReplicas
+  value: 3
+- op: replace
+  path: /spec/maxReplicas
+  value: 12

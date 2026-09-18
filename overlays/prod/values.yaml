@@ -1,0 +1,23 @@
+# Helm values for the prod overlay. Image tag and replica count are applied as
+# Kustomize patches below, so they are visible as release-specific changes rather
+# than hidden in a values file.
+environment: production
+config:
+  logLevel: warn
+ingress:
+  host: app.example.com
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 12
+pdb:
+  enabled: true
+serviceMonitor:
+  enabled: true
+resources:
+  requests:
+    cpu: 250m
+    memory: 256Mi
+  limits:
+    cpu: 1
+    memory: 512Mi
