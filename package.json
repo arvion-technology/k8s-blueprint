@@ -16,7 +16,7 @@
     "demo": "node scripts/serve.mjs . 4173",
     "shot": "node scripts/shot.mjs 1440 900 docs/screenshot.png",
     "shot:2": "node scripts/shot.mjs 1440 900 docs/screenshot-2.png '#prod'",
-    "verify": "node --test test/ && node scripts/serve-check.mjs && bash scripts/validate.sh",
+    "verify": "node --test && node scripts/serve-check.mjs && bash scripts/validate.sh",
     "validate": "bash scripts/validate.sh",
     "sync": "node scripts/sync-demo.mjs",
     "render-base": "node scripts/render-base.mjs"
