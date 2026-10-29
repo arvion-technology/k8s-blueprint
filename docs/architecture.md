@@ -14,7 +14,7 @@ service account without a mounted token.
                                            │
                             ┌──────────────▼──────────────┐
                             │ Deployment                  │
-                            │  replicas: 2 (HPA 2–8)      │
+                            │  replicas: 2 (HPA 2-8)      │
                             │  securityContext non-root   │
                             │  readOnlyRootFilesystem     │
                             │  probes: /healthz /readyz   │
@@ -47,9 +47,9 @@ plain manifests. It exists so a team that does not use Helm can run
 
 **Overlays (`overlays/<env>/`)** combine two mechanisms:
 
-- `values.yaml` — environment name, log level, ingress host, autoscaling bounds,
+- `values.yaml`: environment name, log level, ingress host, autoscaling bounds,
   PDB/service monitor switches, resource sizing.
-- Kustomize `kustomization.yaml` + JSON 6902 patches — namespace, image tag,
+- Kustomize `kustomization.yaml` + JSON 6902 patches: namespace, image tag,
   replica count, ConfigMap values, ingress host and (for prod) HPA bounds.
 
 The validation script renders the chart with each overlay's values, applies the
@@ -66,7 +66,7 @@ when conftest is present. Neither is required.
 | Image tag (patch) | `:dev` | `:staging` | `:1.4.0` |
 | `APP_ENV` | `dev` | `staging` | `production` |
 | Log level | `debug` | `info` | `warn` |
-| HPA | 1–3 | 2–8 | 3–12 |
+| HPA | 1-3 | 2-8 | 3-12 |
 | CPU request | 100m | 100m | 250m |
 | Memory limit | 384Mi | 384Mi | 512Mi |
 
@@ -82,7 +82,7 @@ and keeping them in the overlay makes the diff readable.
 - All Linux capabilities are dropped; privilege escalation is disabled.
 - No service account token is mounted into the pod.
 - NetworkPolicy denies all ingress except traffic from the ingress-nginx
-  namespace on the container port. Egress is not restricted — see the runbook.
+  namespace on the container port. Egress is not restricted, see the runbook.
 - Secrets are chart `stringData` placeholders only. Real clusters should use
   External Secrets, Sealed Secrets or a CSI secrets store.
 

@@ -50,9 +50,9 @@ that is why migrations are expanded before they are contracted.
 
 The chart does not run migrations automatically. Two supported shapes:
 
-1. **Init container** — only for fast, idempotent migrations. It delays pod start
+1. **Init container**: only for fast, idempotent migrations. It delays pod start
    but keeps the migration tied to the image.
-2. **Separate Job from CI** — preferred for anything that takes longer than a
+2. **Separate Job from CI**: preferred for anything that takes longer than a
    probe timeout. Run the migration job, wait for completion, then roll the
    Deployment:
 
@@ -79,7 +79,7 @@ first: `kubectl -n webapp-prod describe pod <pending-pod>`.
 
 `minAvailable: 1` protects the service from simultaneous voluntary evictions. A
 node drain will evict one pod at a time and wait for a replacement to become
-ready. If a drain hangs, the PDB is doing its job — check whether replicas are
+ready. If a drain hangs, the PDB is doing its job, check whether replicas are
 actually scheduled:
 
 ```bash
@@ -95,9 +95,9 @@ in progress can block. Finish the rollout first.
 Symptom: pods restart, `kubectl get pods` shows `CrashLoopBackOff` or the
 Deployment never becomes Available.
 
-1. `kubectl -n webapp-prod describe pod <pod>` — look at the probe failure event
+1. `kubectl -n webapp-prod describe pod <pod>`: look at the probe failure event
    and the last state.
-2. `kubectl -n webapp-prod logs <pod> --previous` — the crashed container's logs.
+2. `kubectl -n webapp-prod logs <pod> --previous`: the crashed container's logs.
 3. Check the probe path directly from inside the pod:
    `kubectl -n webapp-prod exec <pod> -- wget -qO- localhost:8080/healthz`.
 
@@ -127,7 +127,7 @@ The chart renders a placeholder `API_TOKEN`. In a real cluster, replace the
 Secret with an external secret and remove `secret.enabled`, or point the chart at
 an existing Secret name. Rotate by creating the new value, restarting the
 Deployment, then removing the old value; do not edit the Secret in place and
-assume pods pick it up — environment variables are read at process start.
+assume pods pick it up, environment variables are read at process start.
 
 ```bash
 kubectl -n webapp-prod create secret generic webapp --from-literal=API_TOKEN=... --dry-run=client -o yaml | kubectl apply -f -

@@ -127,9 +127,9 @@ test("base/kustomization.yaml lists every generated manifest", () => {
 
 test("demo/chart-data.js matches chart/ and overlays/ on disk", () => {
   assert.deepEqual(JSON.parse(JSON.stringify(CHART)), JSON.parse(JSON.stringify(chart)),
-    "demo data is stale — run `npm run sync`");
+    "demo data is stale, run `npm run sync`");
   assert.deepEqual(JSON.parse(JSON.stringify(OVERLAYS)), JSON.parse(JSON.stringify(overlays)),
-    "overlay data is stale — run `npm run sync`");
+    "overlay data is stale, run `npm run sync`");
 });
 
 test("each overlay kustomization targets resources that exist in the rendered chart", () => {

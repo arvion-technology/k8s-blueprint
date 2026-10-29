@@ -17,7 +17,7 @@ trap 'rm -rf "$rendered_dir"' EXIT
 
 if command -v helm >/dev/null 2>&1; then
   echo
-  echo "helm found — rendering each overlay with the real engine"
+  echo "helm found, rendering each overlay with the real engine"
   for overlay in overlays/*/; do
     name="$(basename "$overlay")"
     helm template webapp chart -f "${overlay}values.yaml" > "${rendered_dir}/${name}.yaml"
@@ -26,16 +26,16 @@ if command -v helm >/dev/null 2>&1; then
 
   if command -v conftest >/dev/null 2>&1; then
     echo
-    echo "conftest found — running policies/*.rego"
+    echo "conftest found, running policies/*.rego"
     for file in "${rendered_dir}"/*.yaml; do
       conftest test -p policies "$file" >/dev/null
       echo "  $(basename "$file")  policies ok"
     done
   else
     echo
-    echo "conftest not installed — Rego policies were not executed (Node policy checks above did run)"
+    echo "conftest not installed, Rego policies were not executed (Node policy checks above did run)"
   fi
 else
   echo
-  echo "helm not installed — static renderer only (this is the CI path)"
+  echo "helm not installed, static renderer only (this is the CI path)"
 fi

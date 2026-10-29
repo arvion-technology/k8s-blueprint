@@ -47,7 +47,7 @@ function renderValues(data) {
     ["image", data.image.split("/").pop()],
     ["replicas", String(data.replicas)],
     ["ingress.host", data.host],
-    ["autoscaling", `${data.values.autoscaling.minReplicas}–${data.values.autoscaling.maxReplicas}`],
+    ["autoscaling", `${data.values.autoscaling.minReplicas}, ${data.values.autoscaling.maxReplicas}`],
     ["cpu request", data.values.resources?.requests?.cpu],
     ["memory limit", data.values.resources?.limits?.memory],
     ["log level", data.values.config?.logLevel],
@@ -126,8 +126,8 @@ function renderChecks(data) {
 
 function renderTopology(data) {
   $("#arch-host").textContent = data.host;
-  $("#arch-pod").textContent = data.deployment?.metadata.name ?? "—";
-  $("#arch-hpa").textContent = data.hpa ? `${data.hpa.spec.minReplicas}–${data.hpa.spec.maxReplicas}` : "off";
+  $("#arch-pod").textContent = data.deployment?.metadata.name ?? ", ";
+  $("#arch-hpa").textContent = data.hpa ? `${data.hpa.spec.minReplicas}, ${data.hpa.spec.maxReplicas}` : "off";
   $("#arch-pdb").textContent = data.pdb ? String(data.pdb.spec.minAvailable) : "off";
 }
 

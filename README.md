@@ -2,7 +2,7 @@
 <img src="docs/demo.gif" alt="K8s Blueprint manifest explorer for the dev overlay" width="100%" />
 </div>
 
-<sub>Recorded from the live demo — <a href="docs/demo.mp4">MP4</a> · <a href="docs/screenshot.png">static frame</a></sub>
+<sub>Recorded from the live demo, <a href="docs/demo.mp4">MP4</a> · <a href="docs/screenshot.png">static frame</a></sub>
 
 # K8s Blueprint
 
@@ -17,7 +17,7 @@ security context, conftest policies and a runbook.
 
 The hard part of a Kubernetes blueprint is not writing a Deployment. It is keeping
 dev, staging and production honest with each other while the release-specific
-fields — image tag, replica count, namespace — stay visible in a diff. This
+fields, image tag, replica count, namespace, stay visible in a diff. This
 repository separates those concerns: Helm values own the shape of the application,
 Kustomize patches own the per-environment release fields, and a validator renders
 every overlay and checks the result without requiring helm, kustomize or a
@@ -29,20 +29,20 @@ is not a screenshot: it runs the structural and policy rules against that output
 
 ## What it renders
 
-- **Deployment** — non-root, read-only root filesystem, all capabilities dropped,
+- **Deployment**: non-root, read-only root filesystem, all capabilities dropped,
   `seccompProfile: RuntimeDefault`, resource requests and limits, liveness and
   readiness probes on separate paths, `maxUnavailable: 0` rolling updates, a
   writable `emptyDir` at `/tmp`.
-- **Service, Ingress and ConfigMap** — ClusterIP in front of the pod, ingress with
+- **Service, Ingress and ConfigMap**: ClusterIP in front of the pod, ingress with
   TLS, and configuration mounted as environment variables.
-- **Autoscaling and disruption** — HPA on CPU with per-environment bounds, and a
+- **Autoscaling and disruption**: HPA on CPU with per-environment bounds, and a
   PodDisruptionBudget that keeps one replica available during drains.
-- **NetworkPolicy** — default-deny ingress except from the ingress-nginx namespace
+- **NetworkPolicy**: default-deny ingress except from the ingress-nginx namespace
   on the application port.
-- **ServiceMonitor** — Prometheus Operator scrape config for `/metrics`.
-- **ServiceAccount and Secret** — the token is not mounted; the Secret is a
+- **ServiceMonitor**: Prometheus Operator scrape config for `/metrics`.
+- **ServiceAccount and Secret**: the token is not mounted; the Secret is a
   placeholder that a real cluster replaces with an external secret.
-- **Helm test pod** — `helm test webapp` hits the health endpoint from inside the
+- **Helm test pod**: `helm test webapp` hits the health endpoint from inside the
   cluster.
 
 ## Screenshots
@@ -86,7 +86,7 @@ src/checks.js                  manifest + policy rules (conftest equivalent)
 | Image tag (patch) | `:dev` | `:staging` | `:1.4.0` |
 | `APP_ENV` | `dev` | `staging` | `production` |
 | Log level | `debug` | `info` | `warn` |
-| HPA | 1–3 | 2–8 | 3–12 |
+| HPA | 1-3 | 2-8 | 3-12 |
 | CPU request / memory limit | 100m / 384Mi | 100m / 384Mi | 250m / 512Mi |
 
 Image tag and replica count live in the Kustomize patches rather than the Helm
@@ -129,8 +129,8 @@ conftest test (if installed)     policies/*.rego against the renders
 **A small template engine instead of a helm dependency.** Helm is not installed in
 our CI. `src/render.js` implements the slice of Go templates this chart uses:
 value interpolation, `if`/`else`/`end`, `include` of named defines from
-`_helpers.tpl`, and whitespace trim markers. Anything else — `toYaml`, `range`,
-sprig functions — throws instead of rendering something subtly wrong. If helm is
+`_helpers.tpl`, and whitespace trim markers. Anything else, `toYaml`, `range`,
+sprig functions, throws instead of rendering something subtly wrong. If helm is
 present, `validate.sh` renders with helm and compares the result; the fallback path
 is a checked subset, not a guess.
 
@@ -165,13 +165,13 @@ npm test
 
 26 tests on `node:test`:
 
-- `render.test.js` — interpolation, if/else/end, include, trim, unsupported
+- `render.test.js`: interpolation, if/else/end, include, trim, unsupported
   expressions, deep value merge, JSON 6902 patches, YAML round-trips.
-- `chart.test.js` — all eleven manifests render with valid metadata; security and
+- `chart.test.js`: all eleven manifests render with valid metadata; security and
   probe fields; HPA/PDB/NetworkPolicy/ServiceMonitor; all three overlays apply
   namespace, replicas, image and config patches; base drift; generated demo data;
   patch targets exist.
-- `checks.test.js` — every policy rule passes on the chart and fails when mutated;
+- `checks.test.js`: every policy rule passes on the chart and fails when mutated;
   structural checks catch stale images, wrong replica counts, wrong ingress hosts
   and missing resources.
 
@@ -182,7 +182,7 @@ overlay (105 total), plus a base drift check.
 
 - **The template engine is a subset.** If you edit a template to use `range`,
   `toYaml` or sprig functions, the fallback renderer fails and the validator stops.
-  That is intentional — install helm for full templating — but it means this chart
+  That is intentional, install helm for full templating, but it means this chart
   is written conservatively.
 - **No schema validation.** Values are not checked against a `values.schema.json`.
   A string where a number is expected reaches the template and produces YAML that

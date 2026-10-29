@@ -24,7 +24,7 @@ function row(status, area, name, detail = "") {
   checksRun++;
   if (status === "fail") failures++;
   const mark = status === "pass" ? "ok  " : "FAIL";
-  console.log(`  ${mark} ${area.padEnd(11)} ${name}${detail ? ` — ${detail}` : ""}`);
+  console.log(`  ${mark} ${area.padEnd(11)} ${name}${detail ? `, ${detail}` : ""}`);
 }
 
 /* ---------------------------------------------------------------- base drift */
